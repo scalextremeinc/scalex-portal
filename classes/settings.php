@@ -35,9 +35,9 @@ class Settings {
         $this->_config = $this->retrieve();
     }
 
-    public function settings_page_data($debug_mode = false)
+    public function settings_page_data($clear_cache = false, $debug_mode = false)
     {
-        $api = new API();
+        $api = new API($clear_cache);
         $scriptsResult = $nodesResult = $cloudsResult = $templatesResult = $costResult = '';
         $scriptsResult = $api->get_scripts_info('raw');
         $nodesResult = $api->get_nodes_info('raw');
@@ -48,38 +48,38 @@ class Settings {
 
         $debug = array();
         if ($debug_mode) {
-            if ($scriptsResult == '[]' || (strlen($scriptsResult) == 0) || (strpos($scriptsResult,'FAILURE')) ) { 
-                $debug['scripts'] = '<a href="debug#scripts" class="btn btn-danger">Scripts</a>'; 
-            } else { 
-                $debug['scripts'] = '<a href="debug#scripts" class="btn btn-success">Scripts</a>'; 
+            if ($scriptsResult == '[]' || (strlen($scriptsResult) == 0) || (strpos($scriptsResult,'FAILURE')) ) {
+                $debug['scripts'] = '<a href="debug#scripts" class="btn btn-danger">Scripts</a>';
+            } else {
+                $debug['scripts'] = '<a href="debug#scripts" class="btn btn-success">Scripts</a>';
             }
-            if ($nodesResult == '[]' || (strlen($nodesResult) == 0)  || (strpos($nodesResult,'FAILURE'))) { 
-                $debug['nodes'] = '<a href="debug#nodes"  class="btn btn-danger">Nodes</a>'; 
-            } else { 
-                $debug['nodes'] = '<a href="debug#nodes"  class="btn btn-success">Nodes</a>'; 
+            if ($nodesResult == '[]' || (strlen($nodesResult) == 0)  || (strpos($nodesResult,'FAILURE'))) {
+                $debug['nodes'] = '<a href="debug#nodes"  class="btn btn-danger">Nodes</a>';
+            } else {
+                $debug['nodes'] = '<a href="debug#nodes"  class="btn btn-success">Nodes</a>';
             }
-            if ($cloudsResult == '[]' || (strlen($cloudsResult) == 0) || (strpos($cloudsResult,'FAILURE')) ) { 
-                $debug['clouds'] = '<a href="debug#clouds"  class="btn btn-danger">Clouds</a>'; 
-            } else { 
-                $debug['clouds'] = '<a href="debug#clouds"  class="btn btn-success">Clouds</a>'; 
+            if ($cloudsResult == '[]' || (strlen($cloudsResult) == 0) || (strpos($cloudsResult,'FAILURE')) ) {
+                $debug['clouds'] = '<a href="debug#clouds"  class="btn btn-danger">Clouds</a>';
+            } else {
+                $debug['clouds'] = '<a href="debug#clouds"  class="btn btn-success">Clouds</a>';
             }
-            if ($templatesResult == '[]' || (strlen($templatesResult) == 0) || (strpos($templatesResult,'FAILURE')) ) { 
-                $debug['templates'] = '<a href="debug#templates" class="btn btn-danger">Templates</a>'; 
-            } else { 
-                $debug['templates'] = '<a href="debug#templates"  class="btn btn-success">Templates</a>'; 
+            if ($templatesResult == '[]' || (strlen($templatesResult) == 0) || (strpos($templatesResult,'FAILURE')) ) {
+                $debug['templates'] = '<a href="debug#templates" class="btn btn-danger">Templates</a>';
+            } else {
+                $debug['templates'] = '<a href="debug#templates"  class="btn btn-success">Templates</a>';
             }
-            if ($costResult == '[]' || (strlen($costResult) == 0) || (strpos($costResult,'FAILURE')) ) { 
-                $debug['cost'] = '<a href="debug#cost" class="btn btn-danger">Cost</a>'; 
-            } else { 
-                $debug['cost'] = '<a href="debug#cost" class="btn btn-success">Cost</a>'; 
+            if ($costResult == '[]' || (strlen($costResult) == 0) || (strpos($costResult,'FAILURE')) ) {
+                $debug['cost'] = '<a href="debug#cost" class="btn btn-danger">Cost</a>';
+            } else {
+                $debug['cost'] = '<a href="debug#cost" class="btn btn-success">Cost</a>';
             }
         }
         $this->debug = $debug;
 
-        $config_permissions = $this->_file_perms('data/config.txt'); 
+        $config_permissions = $this->_file_perms('data/config.txt');
 
         // TURN THE ARRAY RESULT INTO A DROPDOWN SELECT
-        $company_logos = $this->_get_logo_files( "ui/assets/logos/", "*.*"); 
+        $company_logos = $this->_get_logo_files( "ui/assets/logos/", "*.*");
 
         $this->config_permissions = $config_permissions;
         $this->company_logos = $company_logos;
@@ -87,15 +87,15 @@ class Settings {
 
     private function _get_logo_files($path = '.', $mask = '*')
     {
-        $dir = @ dir($path); 
+        $dir = @ dir($path);
 
         $logos = array();
-        while (($file = $dir->read()) !== false) { 
-            if ($file != '.' && $file != '..' && fnmatch($mask, $file)) 
-                $logos[] = $file; 
-        } 
-        $dir->close(); 
-        return ($logos); 
+        while (($file = $dir->read()) !== false) {
+            if ($file != '.' && $file != '..' && fnmatch($mask, $file))
+                $logos[] = $file;
+        }
+        $dir->close();
+        return ($logos);
     }
 
     private function _file_perms($file, $octal = false)
@@ -134,10 +134,6 @@ class Settings {
         fclose($fp);
     }
 
-    public function set_permissions()
-    {
-        $this->_config_file = 'data/config.txt';
-        return chmod($this->_config_file, 0777);
-    }
 
 }
+
