@@ -29,9 +29,9 @@
  
 class Scalex_launch {
     // Called by launch_machine
-    public static function machine()
+    public static function machine($clear_cache = false)
     {
-        $api = new API();
+        $api = new API($clear_cache);
 
         $templates = $api->get_template_info();
 
@@ -56,7 +56,7 @@ class Scalex_launch {
         $script_params = array('parameterKey' => '', 'parameterDataType' => '', 'parameterDefaultValue' => '', 'description' => '');
         $filter_params = array();
 
-        foreach ($script_input_params as $param_set) { 
+        foreach ($script_input_params as $param_set) {
             $filter_params[] = array_intersect_key($param_set, $script_params);
         }
         return $filter_params;
