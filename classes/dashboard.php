@@ -31,9 +31,9 @@ define('ICON_DIR', 'ui/assets/icons/');
 class Dashboard {
     private $_api;
 
-    public function __construct()
+    public function __construct($clear_cache)
     {
-        $this->_api = new API();
+        $this->_api = new API($clear_cache);
         // NODES
 
         $nodeResult = $this->_api->get_nodes_info();
