@@ -27,25 +27,25 @@
  *
  */
  
-include('httpz.php');
-$http = new httpz();
-
 class API {
     private $_base;
     private $_http;
     private $_config;
+    private $_cache_time;
     // used by most API calls for authentication
     private $_auth_token_fragment;
 
-    public function __construct()
+    public function __construct($clear_cache = false)
     {
         global $settings;
-        global $http;
 
-        $this->_http = $http;
+        include('httpz.php');
+        $http = new httpz();
+        $this->_http = new httpz();
         $this->_http->enableTest();
 
         $this->_config = $settings->retrieve();
+        $this->_cache_time = $clear_cache ? 0 : CACHE_TIME;
 
         $this->_base = 'https://'.$this->_config['domain'].'/v0';
         $this->_auth_token_fragment = 'access_token=' . $this->_auth();
@@ -82,7 +82,7 @@ class API {
     private function _get_roles_info($company_info)
     {
         $rolesUrl = $this->_base.'/roles?client_id='.$this->_config['client_id'].'&company_id='.$company_info['companyId'];
-        $rolesResult = $this->_http->get($rolesUrl);
+        $rolesResult = $this->_http->get($rolesUrl, $this->_cache_time);
         $result = json_decode($rolesResult, true);
 
         $role_info = '';
@@ -123,7 +123,7 @@ class API {
         else {
             $templatesUrl = $this->_base."/templates?".$this->_auth_token_fragment;
         }
-        $result = $this->_http->get($templatesUrl);
+        $result = $this->_http->get($templatesUrl, $this->_cache_time);
         return $result;
     }
 
@@ -168,7 +168,7 @@ class API {
         else {
             $scriptInfoURL = $this->_base . "/scripts?" . $this->_auth_token_fragment;
         }
-        $result = $this->_http->get($scriptInfoURL);
+        $result = $this->_http->get($scriptInfoURL, $this->_cache_time);
         return $result;
     }
 
@@ -204,7 +204,7 @@ class API {
         else {
             $jobsInfoURL = $this->_base . "/jobs/$id?" . $this->_auth_token_fragment;
         }
-        $result = $this->_http->get($jobsInfoURL);
+        $result = $this->_http->get($jobsInfoURL, $this->_cache_time);
         return $result;
     }
 
@@ -233,7 +233,7 @@ class API {
     public function get_nodes_info($fmt = 'json')
     {
         $url = $this->_base . '/nodes?' . $this->_auth_token_fragment;
-        $result = $this->_http->get($url);
+        $result = $this->_http->get($url, $this->_cache_time);
         if ($fmt == 'json') {
             $result = json_decode($result,true);
         }
@@ -247,7 +247,7 @@ class API {
     public function get_cloud_info($fmt = 'json')
     {
         $url = 'https://' . $this->_config['domain'] . '/scalex/acl/getcloudproviders?' . $this->_auth_token_fragment . '&companyId=' . $this->_config['company_id'] . '&role=Admin&user=12234';
-        $result = $this->_http->get($url);
+        $result = $this->_http->get($url, $this->_cache_time);
         if ($fmt == 'json') {
             $result = json_decode($result,true);
         }
@@ -257,10 +257,10 @@ class API {
 
     public function get_cloud_spend_info($provider_acct_id, $fmt = 'json')
     {
-  	$url = "https://".$this->_config['domain']."/scalex/budget/usagebyprovider?" . $this->_auth_token_fragment . "&organizationId=".$this->_config['company_id']."&provideraccountid=".$provider_acct_id."&budgetedorganizationid=".$this->_config['company_id']."&periodtype=MONTHLY&budgetlevel=ORGANIZATION";
-	$result = $this->_http->get($url);
+        $url = "https://".$this->_config['domain']."/scalex/budget/usagebyprovider?" . $this->_auth_token_fragment . "&organizationId=".$this->_config['company_id']."&provideraccountid=".$provider_acct_id."&budgetedorganizationid=".$this->_config['company_id']."&periodtype=MONTHLY&budgetlevel=ORGANIZATION";
+        $result = $this->_http->get($url, $this->_cache_time);
         if ($fmt == 'json') {
-	    $result = json_decode($result, true);
+            $result = json_decode($result, true);
         }
         return $result;
     }
