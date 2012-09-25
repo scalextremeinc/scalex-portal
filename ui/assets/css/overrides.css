@@ -1,0 +1,72 @@
+body {
+color: #222;
+font-family:'Open Sans', Helvetica, Arial, sans-serif!important;
+font-weight: 300;
+font-size: 13px;
+text-shadow: 0px;
+}
+
+h3 {
+color:#888;
+}
+
+.big_button, .big_button_green, .big_button_gold {
+padding:10px;
+height:auto;
+text-align:center;
+border:1px solid #DDDDDD;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+}
+
+.big_button {
+background:#DDDDDD url('../images/gradient_200.png');
+}
+
+.big_button_green {
+color:#1f5f2d;
+background:#86c393 url('../images/gradient_200.png');
+}
+
+.big_button_gold {
+color:#d6783a;
+background:#d6783a url('../images/gradient_200.png');
+}
+
+
+.instance, .panel {
+padding:10px;
+text-align:left;
+color: #777;
+height:auto;
+border:1px solid #DDDDDD;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+}
+
+.instance {
+background:#DDDDDD url('../images/gradient_200.png') repeat-x;
+}
+
+.panel {
+background:#EEEEEE url('../images/gradient_200.png') repeat-x;
+}
+
+.thumbdiv {
+height: auto;
+width:90px;
+padding:10px 0;
+text-align:center;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+background:#FFFFFF;
+}
+
+.span1 img {
+margin:6px 0 0 0;
+height:40px!important;
+width:40px!important;
+}

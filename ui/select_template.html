@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="span11">
+      <h3>Launch Server</h3>
+To launch a new server, select one of the server types listed below. Some servers will have setup scripts that are run as part of the server provisioning process, and you might be asked to enter in some input parameters to configure the server and applications.
+  </div>
+</div>
+
+<hr/>
+
+<F3:repeat group="{{@template_data}}" value="{{@data}}">
+<div class="row">
+  <div class="span11 instance gradient">
+    <div class="span1">
+      <img src="./ui/assets/icons/icon_template.png">
+    </div>
+    <div class="span4">
+      <p></p>
+      <h3>{{@data.processName}}</h3>
+    </div>
+    <div class="span4" style="margin:7px 0 0 0">
+      {{@data.description}} 
+    </div>
+    <div class="span2" style="margin:7px 0 0 0">
+      <div class="btn-group  pull-right">
+        <a href="{{@data.launch_params_page}}" class="btn btn-large btn-info">Launch</a>
+      </div>
+    </div>
+  </div>
+</div>
+<p>
+</p>
+</F3:repeat>

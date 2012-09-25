@@ -1,0 +1,101 @@
+
+
+
+<!--
+{{@status_buttons}}
+-->
+
+<form class="form-horizontal" action="save_settings" method="post" name="install" id="install">
+<input type="hidden" name="base_dir" value="{{@config.base_dir}}"/>
+<input type="hidden" id="domain" name="domain"  value="{{@config.domain}}"/>
+<div class="row">
+  <div class="span6">
+    <h3>API Settings</h3>
+	Found inside your <a href="https://manage.scalextreme.com" target="top">ScaleXtreme account</a>.
+    <br><br>
+
+    <fieldset>
+      <div class="control-group">
+        <label class="control-label" for="company_id">Company ID:</label>
+        <div class="controls">
+          <input type="text" class="span2 input-xlarge" id="company_id" name="company_id"  value="{{@config.company_id}}" />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="company_name">Company Name:</label>
+        <div class="controls">
+          <input type="text" class="span2 input-xlarge" id="company_name" name="company_name"  value="{{@config.company_name}}"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="role">Role:</label>
+        <div class="controls">
+          <input type="text" class="span1 input-xlarge" id="role" name="role"  value="{{@config.role}}"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="client_id">API Key:</label>
+        <div class="controls">
+          <input type="text" class="span3 input-xlarge" id="client_id" name="client_id"  value="{{@config.client_id}}"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="client_secret">Secret Password:</label>
+        <div class="controls">
+          <input type="text" class="span3 input-xlarge" id="client_secret" name="client_secret"  value="{{@config.client_secret}}"/>
+        </div>
+      </div>
+    </fieldset>
+
+  </div>
+
+  <div class="span6">
+    <h3>Page Branding</h3>
+		Affects look and feel only.
+    <br><br>
+
+    <fieldset>
+      <div class="control-group">
+        <label class="control-label" for="branding_company_name">Company Name:</label>
+        <div class="controls">
+          <input type="text" class="span2 input-xlarge" id="branding_company_name" name="branding_company_name"  value="{{@config.branding_company_name}}"/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="branding_company_logo">Company Logo:</label>
+        <div class="controls">
+          <select id="branding_company_logo" name="branding_company_logo">
+            <F3:repeat group="{{@company_logos}}" value="{{@logo}}">
+              <F3:check if="{{@logo==@config.branding_company_logo}}">
+                <F3:true>
+                  <option selected value="{{@logo}}">{{@logo}}</option>
+                </F3:true>
+                <F3:false>
+                  <option value="{{@logo}}">{{@logo}}</option>
+                </F3:false>
+              </F3:check>
+            </F3:repeat>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="branding_title">Title:</label>
+        <div class="controls">
+          <input type="text" class="span3 input-xlarge" id="branding_company_title" name="branding_company_title"  value="{{@config.branding_company_title}}"/>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<div class="row">
+  <div class="span9 form-actions">
+    <input type="submit" class="pull-right btn btn-primary btn-large" name="Submit" value=" Save changes ">
+  </div>
+</div>
+</form>

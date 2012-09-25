@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="span2">
+    <h3>API Status</h3>
+  </div>
+  <div class="span2">
+    <F3:check if="{{@config_permissions=='777'}}">
+      <F3:true>
+        <a href="#" id="btn_permissions" class="btn btn-success" title="config.txt is set to 0{{@config_permissions}}">Permissions OK</a>
+      </F3:true>
+      <F3:false>
+        <a href="set_permissions" id="btn_permissions" class="btn btn-danger" rel="tooltip" title="Set data/config.txt in this folder to 0777">Set Permissions</a>
+      </F3:false>
+    </F3:check>
+
+    <script> 
+    $(function () { 
+        $("#btn_permissions").tooltip( { placement:"bottom" } );
+    });  
+    </script> 
+
+  </div>
+  <div class="span5">
+    <div class="btn-group">
+      {{@debug['scripts']}}
+      {{@debug['nodes']}}
+      {{@debug['clouds']}}
+      {{@debug['templates']}}
+      {{@debug['cost']}}
+    </div>
+  </div>
+  <div class="span3">Click a button to debug</div>
+</div>
+<hr/>
+

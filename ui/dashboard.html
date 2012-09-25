@@ -1,0 +1,57 @@
+<h3>Server Stats</h3>
+<div class="row" style="margin-bottom:15px">
+  <div class="span3 big_button" onClick="window.location='#'">
+    <h1>{{@serverCount}}</h1>Total Servers
+  </div>
+  <div class="span3 big_button_green" onClick="window.location='#'">
+    <h1>{{@status_count.online}}</h1>Online servers
+  </div>
+  <div class="span3 big_button_gold" onClick="window.location='#'">
+    <h1>{{@status_count.offline}}</h1>Offline servers
+  </div>
+</div>
+
+<!--// CLOUDS ROW RESULTS -->
+
+<hr/>
+<h3>Clouds</h3>
+<F3:repeat group="{{@cloud_items}}" value="{{@cloud_item}}">
+<div class="row">
+  <div class="span10 instance gradient">
+    <div class="span1">
+      <div style="width:64px;height:64px"><img src="{{@cloud_item.icon}}"></div>
+    </div>
+    <div class="span3">
+      <p></p>
+      <h3>{{@cloud_item.name}}</h3>
+    </div>
+    <div class="span5">
+      <div class="row">
+        <div class="span2">&nbsp;</div>
+        <div class="span2" style="text-align:right;margin:15px 0 0 0">Monthly spend:&nbsp;</div>
+        <div class="span1" style="padding:0; margin:15px 0 0 0;font-size:1.2em"><strong>${{@cloud_item.cost}}</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+<p></p>
+</F3:repeat>
+
+<!--// SERVERS ROW RESULTS -->
+
+<hr/>
+<h3>Servers</h3>
+<F3:repeat group="{{@servers}}" key="{{@name}}" value="{{@icon}}">
+<div class="row">
+  <div class="span10 instance gradient">
+    <div class="span1">
+      <img src="{{@icon}}">
+    </div>
+    <div class="span5">
+      <p></p>
+      <h3>{{@fixkey(@name)}}</h3>
+    </div>
+  </div>
+</div>
+<p></p>
+</F3:repeat>

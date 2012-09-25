@@ -1,0 +1,11 @@
+base_dir:/
+domain:manage.scalextreme.com
+company_id:
+company_name:
+role:Admin
+client_id:
+client_secret:
+branding_company_name:Acme
+branding_company_logo:logo_generic.png
+branding_company_title:Cloud Portal
+Submit: Save changes 

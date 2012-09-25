@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="span11">
+    <div class="span5">
+      <h3>{{@launch_results.jobName}} launched successfully</h3>
+    </div>
+    <div class="span5 pull-right">
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<p>Job ID: {{@launch_results.jobId}}</p>
+<p>Job Name: {{@launch_results.jobName}}</p>
+<p>Status: {{@launch_results.status}}</p>
+
+<F3:repeat group="{{@launch_results.scheduleBeans.0}}" key="{{@key}}" value="{{@value}}">
+<p><strong>{{@key}}</strong>: {{@value}}</p>
+</F3:repeat>

@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="span11">
+    <div class="span5">
+      <h3>I would like to launch a new machine.</h3>
+    </div>
+    <div class="span5 pull-right">
+      <font class="pull-right">I'm at {{@remote_addr}} on {{@when}}</font>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<form class="well" name="policyform">
+
+<div class="control-group">
+  <label class="checkbox" for="question_1">
+  <input type="checkbox" name="question_1" id="question_1"> I have the necessary authorizations from my {{@company_name}} department to launch machines.
+  </label>
+</div>
+
+<div class="control-group">
+  <label class="checkbox" for="question_2">
+  <input type="checkbox" name="question_2" id="question_2"> To the best of my knowledge, no company confidential information will be on this machine.
+  </label>
+</div>
+
+<div class="control-group">
+  <label class="checkbox" for="question_3">
+  <input type="checkbox" name="question_3" id="question_3"> I will use this machine in accordance with {{@company_name}} company policies.
+  </label>
+</div>
+
+<div class="form-actions">
+  <a id="submit_button" href="launch" class="btn btn-large"> Continue </a>
+</div>
+               
+</form>
+
+<script>
+$(document).ready(function(){ 
+    var allchecked = false;
+    $('input[type="checkbox"]').attr('checked', false);
+
+    $('input[type="checkbox"]').click(function() {
+        allchecked = true;
+        $('input[type="checkbox"]').each(function(ndx, el) {
+            if (!el.checked) allchecked = false;
+        });
+        if (allchecked) {
+            $("#submit_button").removeClass("disabled").addClass("btn-info"); 
+        } else { 
+            $("#submit_button").addClass("disabled").removeClass("btn-info"); 
+        } 
+        console.log('all checked: ' + allchecked);
+    });
+
+    $('#submit_button').click(function() {
+        if (allchecked) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
+</script>
+
