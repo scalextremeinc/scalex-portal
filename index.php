@@ -48,7 +48,7 @@ F3::route('GET /',
 
 F3::route('GET /launch', 
     function() {
-        $template_data = Launch::machine();
+        $template_data = Scalex_launch::machine();
         F3::set('template_data', $template_data);
         F3::set('content', Template::serve('ui/select_template.html'));
         echo Template::serve('ui/template.html');
@@ -59,7 +59,7 @@ F3::route('GET /launch_params/@processId',
     function() {
         $processId = F3::get('PARAMS["processId"]');
 
-        $process_data = Launch::params($processId);
+        $process_data = Scalex_launch::params($processId);
         
         F3::set('processId', $processId);
         F3::set('processName', $process_data['processName']);
@@ -74,7 +74,7 @@ F3::route('GET /launch_params/@processId',
 F3::route('POST /launch_submit',
     function() {
         $post_data = $_POST;
-        $launch_results = Launch::set_launch($post_data);
+        $launch_results = Scalex_launch::set_launch($post_data);
         if ($launch_results) {
             F3::set('launch_results', $launch_results);
             F3::set('content', Template::serve('ui/launch_results.html'));
