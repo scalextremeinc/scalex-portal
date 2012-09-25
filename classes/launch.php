@@ -27,7 +27,7 @@
  *
  */
  
-class Launch {
+class Scalex_launch {
     // Called by launch_machine
     public static function machine()
     {
