@@ -27,6 +27,7 @@
  *
  */
 
+define('CACHE_TIME', 600);
 date_default_timezone_set('America/Los_Angeles');
 // F3 framework
 require_once 'lib/base.php';
@@ -46,21 +47,26 @@ F3::route('GET /',
     }
 );
 
-F3::route('GET /launch', 
-    function() {
-        $template_data = Scalex_launch::machine();
+
+F3::route('GET /launch/clear', 'clear_launch');
+    function clear_launch() {
+        launch(true);
+    }
+F3::route('GET /launch', 'launch');
+    function launch($clear_cache = false) {
+        $template_data = Scalex_launch::machine($clear_cache);
         F3::set('template_data', $template_data);
         F3::set('content', Template::serve('ui/select_template.html'));
         echo Template::serve('ui/template.html');
     }
-);
+
 
 F3::route('GET /launch_params/@processId',
     function() {
         $processId = F3::get('PARAMS["processId"]');
 
         $process_data = Scalex_launch::params($processId);
-        
+
         F3::set('processId', $processId);
         F3::set('processName', $process_data['processName']);
         F3::set('scripts', $process_data['scripts']);
@@ -86,20 +92,27 @@ F3::route('POST /launch_submit',
     }
 );
 
-F3::route('GET /problem', 
+F3::route('GET /problem',
     function() {
         F3::set('content', Template::serve('ui/launch_problem.html'));
         echo Template::serve('ui/template.html');
     }
 );
 
-F3::route('GET /dashboard',
-    function() {
+
+// Allow the cache to be cleared for the Dashboard page.
+F3::route('GET /dashboard/clear', 'clear_dashboard');
+    // Use this if the refresh / clear cache button was clicked.
+    function clear_dashboard() {
+        dashboard(true);
+    }
+F3::route('GET /dashboard', 'dashboard');
+    function dashboard($clear_cache = false) {
         F3::set('fixkey', function($str) {
             return str_replace('-dot-', '.', $str);
         });
         include('classes/dashboard.php');
-        $dash = new Dashboard();
+        $dash = new Dashboard($clear_cache);
         F3::set('serverCount', $dash->server_count);
         F3::set('status_count', $dash->status_count);
         F3::set('cloud_items', $dash->cloud_items);
@@ -107,9 +120,9 @@ F3::route('GET /dashboard',
         F3::set('content', Template::serve('ui/dashboard.html'));
         echo Template::serve('ui/template.html');
     }
-);
 
-F3::route('GET /policy', 
+
+F3::route('GET /policy',
     function() {
         F3::set('remote_addr', $_SERVER['REMOTE_ADDR']);
         F3::set('when', date('D, M d Y') . ' at ' . date('H:i:s T'));
@@ -118,42 +131,24 @@ F3::route('GET /policy',
     }
 );
 
-/*
-function show_settings()
-{
-    global $settings;
-    $settings->settings_page_data();
-    F3::set('company_logos', $settings->company_logos);
-    F3::set('debug', $settings->debug);
-    F3::set('config_permissions', $settings->config_permissions);
-    $status_buttons = Template::serve('ui/status_buttons.html');
-    F3::set('status_buttons', Template::serve('ui/status_buttons.html'));
-    F3::set('content', Template::serve('ui/settings.html'));
-    echo Template::serve('ui/template.html');
-}
-*/
 
-F3::route('GET /settings', 
-    function() {
+// Allow the cache to be cleared for the Settings page.
+F3::route('GET /settings/clear', 'clear_settings');
+    function clear_settings() {
+        settings(true);
+    }
+F3::route('GET /settings', 'settings');
+    function settings($clear_cache = false) {
         global $settings;
-        $settings->settings_page_data();
+        $settings->settings_page_data($clear_cache);
         F3::set('company_logos', $settings->company_logos);
-//        F3::set('debug', $settings->debug);
         F3::set('config_permissions', $settings->config_permissions);
         $status_buttons = Template::serve('ui/status_buttons.html');
         F3::set('status_buttons', Template::serve('ui/status_buttons.html'));
         F3::set('content', Template::serve('ui/settings.html'));
         echo Template::serve('ui/template.html');
     }
-);
 
-F3::route('GET /set_permissions',
-    function() {
-        global $settings;
-        $settings->set_permissions();
-        F3::reroute('/settings');
-    }
-);
 
 F3::route('POST /save_settings',
     function() {
